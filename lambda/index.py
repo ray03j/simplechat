@@ -20,7 +20,7 @@ bedrock_client = None
 
 # モデルID
 MODEL_ID = os.environ.get("MODEL_ID", "us.amazon.nova-lite-v1:0")
-API_URL = os.environ.get("API_ID", "http://localhost:8501") 
+API_URL = os.environ.get("API_URL", "https://683e-35-194-219-53.ngrok-free.app") 
 
 def lambda_handler(event, context):
     try:
@@ -53,9 +53,10 @@ def lambda_handler(event, context):
         headers = {
             "Content-Type": "application/json"
         }
+        
         payload = {
             "prompt": message,
-            "max_new_tokens": 512,
+            "max_new_tokens": 32,
             "do_sample": True,
             "temperature": 0.7,
             "top_p": 0.9,
@@ -104,7 +105,7 @@ def lambda_handler(event, context):
             },
             "body": json.dumps({
                 "success": True,
-                "response": assistant_response,
+                "response": response_body["generated_text"],
                 "conversationHistory": messages
             })
         }
